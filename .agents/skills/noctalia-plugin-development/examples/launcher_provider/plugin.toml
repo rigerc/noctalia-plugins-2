@@ -1,0 +1,21 @@
+id = "acme/launcher-demo"
+name = "Launcher Demo"
+version = "0.1.0"
+plugin_api = 3
+author = "acme"
+license = "MIT"
+description = "Launcher Demo native Luau plugin."
+icon = "puzzle"
+
+[[setting]]
+key = "label"
+type = "string"
+label_key = "settings.label.label"
+default = "Launcher Demo"
+
+[[launcher_provider]]
+id = "search"
+entry = "launcher.luau"
+prefix = "demo"
+glyph = "search"
+debounce_ms = 200

@@ -1,0 +1,30 @@
+id = "acme/demo"
+name = "Demo"
+version = "0.1.0"
+plugin_api = 3
+author = "acme"
+license = "MIT"
+description = "Demo native Luau plugin."
+icon = "puzzle"
+
+[[setting]]
+key = "label"
+type = "string"
+label_key = "settings.label.label"
+default = "Demo"
+
+[[widget]]
+id = "status"
+entry = "widget.luau"
+
+[[panel]]
+id = "panel"
+entry = "panel.luau"
+width = 380
+height = 230
+placement = "floating"
+position = "center"
+
+[[service]]
+id = "service"
+entry = "service.luau"

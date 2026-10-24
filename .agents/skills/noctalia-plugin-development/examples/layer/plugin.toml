@@ -1,0 +1,29 @@
+id = "acme/layer-demo"
+name = "Layer Demo"
+version = "0.1.0"
+plugin_api = 36
+author = "acme"
+license = "MIT"
+description = "Layer Demo native Luau plugin."
+icon = "puzzle"
+
+[[setting]]
+key = "label"
+type = "string"
+label_key = "settings.label.label"
+default = "Layer Demo"
+
+[[service]]
+id = "controller"
+entry = "controller.luau"
+
+[[layer]]
+id = "overlay"
+entry = "layer.luau"
+layer = "top"
+anchors = []
+width = 340
+height = 110
+keyboard = "none"
+click_through = true
+visible = false
