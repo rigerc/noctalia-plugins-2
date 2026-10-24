@@ -14,7 +14,7 @@ SERVICE = (PLUGIN / "service.luau").read_text(encoding="utf-8")
 
 
 def extract_sql(name: str) -> str:
-    match = re.search(rf"local {name} = \\[\\[(.*?)\\]\\]", SERVICE, re.DOTALL)
+    match = re.search(rf"local {name} = \[\[(.*?)\]\]", SERVICE, re.DOTALL)
     if match is None:
         raise AssertionError(f"{name} SQL declaration missing")
     return match.group(1)
