@@ -8,6 +8,12 @@ on:
       - "*/**"
       - ".github/workflows/validate-plugins.py"
       - ".github/workflows/validate-plugins.yml"
+  pull_request:
+    paths:
+      - "*/**"
+      - ".github/workflows/validate-plugins.py"
+      - ".github/workflows/validate-plugins.yml"
+      - ".github/workflows/test_t3_monitor.py"
   workflow_dispatch:
 
 concurrency:
@@ -26,3 +32,9 @@ jobs:
 
       - name: Validate plugin manifests
         run: python3 .github/workflows/validate-plugins.py
+
+      - name: Run validator tests
+        run: python3 -m unittest discover -s .github/workflows -p 'test_validate_plugins.py'
+
+      - name: Test T3 monitor contracts
+        run: python3 -m unittest discover -s .github/workflows -p 'test_t3_monitor.py'

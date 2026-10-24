@@ -1,0 +1,20 @@
+{
+  "settings": {
+    "t3_home": {
+      "label": "T3 home directory",
+      "description": "Leave empty to use T3CODE_HOME or ~/.t3."
+    },
+    "sqlite_path": {
+      "label": "SQLite database",
+      "description": "Leave empty to use <T3 home>/userdata/statev2.sqlite."
+    },
+    "t3_executable": { "label": "T3 CLI executable" },
+    "sqlite_executable": { "label": "sqlite3 executable" },
+    "excluded_projects": {
+      "label": "Excluded project IDs",
+      "description": "One T3 project ID per item. New projects are monitored automatically."
+    },
+    "notify_completions": { "label": "Notify on completions" },
+    "notify_attention": { "label": "Notify when attention is required" }
+  }
+}
