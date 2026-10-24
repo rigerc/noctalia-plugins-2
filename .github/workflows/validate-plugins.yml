@@ -1,0 +1,28 @@
+name: Validate Plugin Manifests
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "*/**"
+      - ".github/workflows/validate-plugins.py"
+      - ".github/workflows/validate-plugins.yml"
+  workflow_dispatch:
+
+concurrency:
+  group: validate-plugin-manifests-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v7
+
+      - name: Validate plugin manifests
+        run: python3 .github/workflows/validate-plugins.py

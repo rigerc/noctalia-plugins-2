@@ -1,0 +1,20 @@
+{
+  "clicks": {
+    "one": "Premuto {count} volta",
+    "other": "Premuto {count} volte"
+  },
+  "settings": {
+    "glyph": {
+      "description": "Glifo mostrato prima dell'etichetta",
+      "label": "Glifo"
+    },
+    "label": {
+      "description": "Testo mostrato nella barra",
+      "label": "Etichetta"
+    },
+    "show_glyph": {
+      "label": "Mostra glifo"
+    }
+  },
+  "title": "Esempio"
+}

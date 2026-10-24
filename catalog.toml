@@ -1,0 +1,13 @@
+# Noctalia plugin source: rigerc/noctalia-plugins-2
+# Each [[plugin]] entry must match a directory and its plugin.toml.
+
+[[plugin]]
+id = "rigerc/example"
+name = "Example"
+version = "1.4.0"
+author = "noctalia"
+license = "MIT"
+icon = "puzzle"
+description = "A reference plugin demonstrating every supported entry type and common runtime APIs."
+plugin_api = 36
+tags = ["demo"]
