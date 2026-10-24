@@ -1444,7 +1444,8 @@ class Validator:
         # Every plugin is one top-level directory. A manifest anywhere else (repo root, or
         # nested deeper) is never loaded by the shell, so fail loudly.
         for manifest_path in self.root.rglob("plugin.toml"):
-            if ".git" in manifest_path.parts:
+            # Bundled skill examples are not installable repository plugins.
+            if ".git" in manifest_path.parts or ".agents" in manifest_path.parts:
                 continue
             depth = len(manifest_path.relative_to(self.root).parts)
             if depth != 2:
