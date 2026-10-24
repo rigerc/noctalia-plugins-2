@@ -2,7 +2,6 @@
 local snapshot = noctalia.state.get("snapshot")
 local expandedParent = nil
 local expandedChild = nil
-local showClose = true
 
 local function text(value)
   if value == nil or value == "" then return "Unavailable" end
@@ -150,7 +149,6 @@ function onRender()
 end
 
 function onOpen(_context)
-  showClose = noctalia.getSetting("shell.show_close_buttons") ~= false
   local value = tonumber(noctalia.state.get("refresh_request")) or 0
   noctalia.state.set("refresh_request", value + 1)
   onRender()
