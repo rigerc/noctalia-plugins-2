@@ -20,3 +20,16 @@ icon = "puzzle"
 description = "A reference plugin demonstrating every supported entry type and common runtime APIs."
 plugin_api = 36
 tags = ["demo"]
+
+[[plugin]]
+id = "rigerc/t3"
+name = "T3 Monitor"
+version = "0.1.0"
+updated_at = 1792879343
+added_at = 1792879343
+author = "rigerc"
+license = "MIT"
+icon = "code"
+description = "Monitor local T3 Code threads and subagents without controlling agents."
+plugin_api = 36
+tags = ["development", "productivity", "bar"]
