@@ -1,0 +1,73 @@
+id = "rigerc/t3"
+name = "T3 Monitor"
+version = "0.1.0"
+plugin_api = 36
+author = "rigerc"
+license = "MIT"
+dependencies = []
+tags = ["development", "productivity", "bar"]
+icon = "code"
+description = "Monitor local T3 Code threads and subagents without controlling agents."
+
+[[setting]]
+key = "t3_home"
+type = "string"
+label_key = "settings.t3_home.label"
+description_key = "settings.t3_home.description"
+default = ""
+
+[[setting]]
+key = "sqlite_path"
+type = "string"
+label_key = "settings.sqlite_path.label"
+description_key = "settings.sqlite_path.description"
+default = ""
+advanced = true
+
+[[setting]]
+key = "t3_executable"
+type = "string"
+label_key = "settings.t3_executable.label"
+default = "t3"
+advanced = true
+
+[[setting]]
+key = "sqlite_executable"
+type = "string"
+label_key = "settings.sqlite_executable.label"
+default = "sqlite3"
+advanced = true
+
+[[setting]]
+key = "excluded_projects"
+type = "string_list"
+label_key = "settings.excluded_projects.label"
+description_key = "settings.excluded_projects.description"
+default = []
+
+[[setting]]
+key = "notify_completions"
+type = "bool"
+label_key = "settings.notify_completions.label"
+default = true
+
+[[setting]]
+key = "notify_attention"
+type = "bool"
+label_key = "settings.notify_attention.label"
+default = true
+
+[[widget]]
+id = "status"
+entry = "widget.luau"
+
+[[service]]
+id = "monitor"
+entry = "service.luau"
+
+[[panel]]
+id = "dashboard"
+entry = "panel.luau"
+width = 460
+height = 550
+placement = "attached"
