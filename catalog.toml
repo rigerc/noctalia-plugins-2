@@ -31,5 +31,5 @@ author = "rigerc"
 license = "MIT"
 icon = "code"
 description = "Monitor local T3 Code threads and subagents without controlling agents."
-plugin_api = 36
+plugin_api = 24
 tags = ["development", "productivity", "bar"]
