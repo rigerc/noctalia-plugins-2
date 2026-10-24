@@ -1,6 +1,6 @@
 # T3 Monitor
 
-Local read-only T3 Code monitoring for **Noctalia v5, plugin API 36**.
+Local read-only T3 Code monitoring for **Noctalia v5, plugin API 24**.
 
 ## Plugin
 
@@ -28,7 +28,7 @@ Local read-only T3 Code monitoring for **Noctalia v5, plugin API 36**.
 
 - T3 Code running locally, with the official `t3` command on `PATH`.
 - `sqlite3` executable on `PATH` with `-json` support.
-- T3 orchestration V2 (`statev2.sqlite`) and Noctalia plugin API 36.
+- T3 orchestration V2 (`statev2.sqlite`) and Noctalia plugin API 24 or newer (introduced in Noctalia v5.0.0-beta.9).
 
 ## Usage
 
