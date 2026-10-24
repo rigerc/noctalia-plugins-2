@@ -33,7 +33,7 @@ Provide local, read-only monitoring of T3 Code parent threads and their subagent
 - `orchestration_v2_projection_subagents` stores `subagent_id`, `thread_id`, `run_id`, `child_thread_id`, `origin`, `status`, `started_at`, `completed_at`, `updated_at`, `payload_json`. The subagent payload can contain `title`, `progress`, `driver`, `model` and related metadata.
 - `orchestration_v2_projection_runtime_requests` stores `thread_id`, `status` and request metadata; use pending request signals only when clearly attributable.
 - `~/.t3/userdata/server-runtime.json` describes the running T3 server.
-- Noctalia v5 / plugin API 36 provides `noctalia.runAsync` with argv, `noctalia.json.decode`, `noctalia.state.set/watch`, `noctalia.pluginDataDir`, native panels, and notifications.
+- Noctalia v5 / plugin API 24 provides `noctalia.runAsync` with argv, `noctalia.json.decode`, `noctalia.state.set/watch`, `noctalia.pluginDataDir`, native panels, and notifications.
 
 References: 
 - https://github.com/pingdotgg/t3code/blob/main/apps/server/src/cli/thread.ts

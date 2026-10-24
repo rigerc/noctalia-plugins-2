@@ -58,7 +58,7 @@ class MonitorContractTests(unittest.TestCase):
     def test_manifest_is_native_and_read_only(self) -> None:
         manifest = tomllib.loads((PLUGIN / "plugin.toml").read_text(encoding="utf-8"))
         self.assertEqual(manifest["id"], "rigerc/t3")
-        self.assertGreaterEqual(manifest["plugin_api"], 36)
+        self.assertEqual(manifest["plugin_api"], 24)
         self.assertEqual([p["id"] for p in manifest["service"]], ["monitor"])
         self.assertEqual([p["id"] for p in manifest["widget"]], ["status"])
         self.assertEqual([p["id"] for p in manifest["panel"]], ["dashboard"])
