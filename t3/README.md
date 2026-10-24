@@ -2,6 +2,15 @@
 
 Local read-only T3 Code monitoring for **Noctalia v5, plugin API 36**.
 
+## Plugin
+
+| Field | Value |
+| --- | --- |
+| ID | `rigerc/t3` |
+| Bar widget | `status` |
+| Panel | `dashboard` |
+| Service | `monitor` |
+
 ## What it does
 
 - Shows separate working parent and active subagent counts in the bar.
@@ -20,6 +29,10 @@ Local read-only T3 Code monitoring for **Noctalia v5, plugin API 36**.
 - T3 Code running locally, with the official `t3` command on `PATH`.
 - `sqlite3` executable on `PATH` with `-json` support.
 - T3 orchestration V2 (`statev2.sqlite`) and Noctalia plugin API 36.
+
+## Usage
+
+Install and add the bar widget to watch local T3 activity. Click the widget to show the panel.
 
 ## Install
 
