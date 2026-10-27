@@ -22,8 +22,8 @@ column is what matters.
 | `logs/provider/events.<threadId>.log`, rotated at ~10 MB | 7 files, all rotations ≈10 MiB |
 | `worktrees/` ≈2.4 GB, `scratch/<date>-<title>-<hash>` | confirmed |
 | `caches/pull-requests/pr-<hash>` | 29 JSON files |
-| No REST API; `:3773` serves SPA HTML for every path, incl. `/api/threads` and `/threads` | 4 paths probed: identical 19,492-byte `text/html` |
-| `sqlite3` is the only non-app read path | no other interface found in `~/.t3` |
+| Unauthenticated `GET` on `:3773` serves SPA HTML for every path, incl. `/api/threads` and `/threads` | 4 paths probed: identical 19,492-byte `text/html`. **Superseded in part:** `POST /api/auth/websocket-ticket` is a real endpoint, and `/ws` is the orchestration channel (see [05](05-access-paths.md)). |
+| `sqlite3` is the only non-app read path | **Corrected:** the orchestration WebSocket (`/ws`, `orchestrationProtocol=2`) exposes the shell read-only; SQLite remains the path for full message bodies. |
 | Long item text needs `itemId` + `textOffset` paging **through MCP** | reproduced: `textTruncated: true`, `nextTextOffset: 300` |
 
 ## Corrected
@@ -37,7 +37,7 @@ column is what matters.
 | `command_receipts` + `thread_launch_workflows` hold idempotency keys | `orchestration_v2_command_receipts` = **0 rows**, `orchestration_v2_thread_launch_workflows` = **0 rows**. The populated receipts table is the v1 `orchestration_command_receipts` (2,712). Do not rely on v2 receipts. |
 | `turn_items` counts: 19,100 total, `assistant_message` 8,236, `reasoning` 3,703, … | Same shape, higher counts (live writes): 19,345 / 8,252 / 3,763, and 3 types the brief omitted — `system_notice` (48), `error` (25), `file_search` (5), plus `run_interrupt_result` (23). |
 | `nodes` 9,404, `context_transfers` 137, `subagents` 69, threads 656, projects 45 | Growth only: 9,628 / 141 / 70 / 660 / 46. |
-| `:3773` returns SPA HTML for `/api/threads` — so no REST | Confirmed, but note the corollary: nothing on `:3773` is a data API, including auth-pairing paths; the MCP server is a separate channel. |
+| `:3773` returns SPA HTML for `/api/threads` — so no REST | Confirmed for unauthenticated `GET`. **Correction:** the auth-pairing endpoint and the `/ws` orchestration RPC are real; only the SPA routes are a catch-all. The MCP server is a separate channel. |
 | MCP read path list | Complete, plus tools the brief did not name: `t3_thread_launch`, `create_threads`, `t3_worktree_*`, `delegate_task`/`task_*`/`orchestrator_capabilities`, `t3_project_*`, `preview_*`, `schedule_task`, `device_*`, PR watch/link tools. |
 
 ## Added findings not in the brief

@@ -1,6 +1,6 @@
 id = "rigerc/t3"
 name = "T3 Monitor"
-version = "0.1.0"
+version = "0.2.0"
 plugin_api = 24
 author = "rigerc"
 license = "MIT"
@@ -17,25 +17,18 @@ description_key = "settings.t3_home.description"
 default = ""
 
 [[setting]]
-key = "sqlite_path"
+key = "token_file"
 type = "string"
-label_key = "settings.sqlite_path.label"
-description_key = "settings.sqlite_path.description"
+label_key = "settings.token_file.label"
+description_key = "settings.token_file.description"
 default = ""
 advanced = true
 
 [[setting]]
-key = "t3_executable"
+key = "node_executable"
 type = "string"
-label_key = "settings.t3_executable.label"
-default = "t3"
-advanced = true
-
-[[setting]]
-key = "sqlite_executable"
-type = "string"
-label_key = "settings.sqlite_executable.label"
-default = "sqlite3"
+label_key = "settings.node_executable.label"
+default = "node"
 advanced = true
 
 [[setting]]

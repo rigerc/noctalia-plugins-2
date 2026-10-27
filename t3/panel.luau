@@ -8,6 +8,12 @@ local function text(value)
   return tostring(value)
 end
 
+local function tr(key, fallback)
+  local value = noctalia.tr(key)
+  if type(value) ~= "string" or value == "" or value == key then return fallback end
+  return value
+end
+
 local function statusColor(status, attention)
   if attention then return "error" end
   if status == "running" or status == "starting" then return "primary" end
@@ -120,9 +126,28 @@ function onRender()
   if type(snapshot) ~= "table" then
     table.insert(rows, ui.label({ text = "Loading local T3 Code activity…" }))
   elseif snapshot.health ~= "ok" then
-    table.insert(rows, ui.label({ text = "Disconnected: " .. text(snapshot.error), color = "error" }))
-    table.insert(rows, ui.label({ text = "Check T3, sqlite3, CLI and plugin paths.", color = "on_surface_variant" }))
+    table.insert(rows, ui.label({ text = text(snapshot.error), color = "error" }))
+    if type(snapshot.tokenCommand) == "string" then
+      table.insert(rows, ui.label({
+        text = tr("token.hint", "Create a read-only token, then the monitor starts by itself:"),
+        color = "on_surface_variant", fontSize = 11,
+      }))
+      table.insert(rows, ui.label({ text = snapshot.tokenCommand, fontSize = 11 }))
+      table.insert(rows, ui.button({
+        text = tr("token.copy", "Copy command"), variant = "ghost",
+        onClick = function() noctalia.copyToClipboard(snapshot.tokenCommand, "text/plain") end,
+      }))
+    end
+    table.insert(rows, ui.label({
+      text = tr("token.requirements", "Check that T3 Code is running and that Node 22+ is on PATH."),
+      color = "on_surface_variant",
+    }))
   else
+    if type(snapshot.warning) == "string" then
+      table.insert(rows, ui.label({
+        text = snapshot.warning, color = "error", fontSize = 11,
+      }))
+    end
     table.insert(rows, ui.label({
       text = tostring(snapshot.parentCount or 0) .. " working parents · "
         .. tostring(snapshot.childCount or 0) .. " active subagents · "
