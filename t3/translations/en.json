@@ -4,17 +4,21 @@
       "label": "T3 home directory",
       "description": "Leave empty to use T3CODE_HOME or ~/.t3."
     },
-    "sqlite_path": {
-      "label": "SQLite database",
-      "description": "Leave empty to use <T3 home>/userdata/statev2.sqlite."
+    "token_file": {
+      "label": "Read-only token file",
+      "description": "Leave empty to use <plugin data dir>/token. Create it with the command shown in the panel."
     },
-    "t3_executable": { "label": "T3 CLI executable" },
-    "sqlite_executable": { "label": "sqlite3 executable" },
+    "node_executable": { "label": "Node executable (22 or newer)" },
     "excluded_projects": {
       "label": "Excluded project IDs",
       "description": "One T3 project ID per item. New projects are monitored automatically."
     },
     "notify_completions": { "label": "Notify on completions" },
     "notify_attention": { "label": "Notify when attention is required" }
+  },
+  "token": {
+    "hint": "Create a read-only token, then the monitor starts by itself:",
+    "copy": "Copy command",
+    "requirements": "Check that T3 Code is running and that Node 22+ is on PATH."
   }
 }

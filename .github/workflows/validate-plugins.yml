@@ -14,6 +14,7 @@ on:
       - ".github/workflows/validate-plugins.py"
       - ".github/workflows/validate-plugins.yml"
       - ".github/workflows/test_t3_monitor.py"
+      - ".github/workflows/t3_reducer_test.lua"
   workflow_dispatch:
 
 concurrency:
@@ -35,6 +36,12 @@ jobs:
 
       - name: Run validator tests
         run: python3 -m unittest discover -s .github/workflows -p 'test_validate_plugins.py'
+
+      # The contract tests replay the bridge output through the Luau reducer, so the
+      # interpreter must exist; otherwise that test is skipped and the state machine
+      # would go untested.
+      - name: Install Lua 5.4
+        run: sudo apt-get update && sudo apt-get install -y lua5.4
 
       - name: Test T3 monitor contracts
         run: python3 -m unittest discover -s .github/workflows -p 'test_t3_monitor.py'

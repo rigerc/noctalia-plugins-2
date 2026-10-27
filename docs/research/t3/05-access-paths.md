@@ -1,17 +1,20 @@
 # 05 — How thread data is exposed
 
-## Two read paths, no third
+## Three read paths
 
 1. **The desktop UI** (the app's own SPA).
-2. **The T3-owned MCP server**, which is injected into agent sessions launched by
+2. **The orchestration WebSocket RPC** at `/ws`, the channel the app itself uses.
+   A read-only token with `orchestration:read` can subscribe to the shell and
+   receive every project and thread, including subagents.
+3. **The T3-owned MCP server**, which is injected into agent sessions launched by
    T3 and exposes thread data as MCP tools.
 
-Anything else has to read `statev2.sqlite` directly.
+For corpus-level analysis of full message bodies, read `statev2.sqlite` directly.
 
-## There is no REST API — verified
+## HTTP: SPA fallback plus one real endpoint
 
-The server on `:3773` returns the SPA shell for every path, including paths that
-look like API routes:
+Unauthenticated `GET` requests return the SPA shell for every path, including
+paths that look like API routes:
 
 ```
 /                -> 200 text/html 19492 bytes
@@ -21,15 +24,74 @@ look like API routes:
 ```
 
 Identical byte counts and `content-type: text/html; charset=utf-8` in all four
-cases; body is the same `<!doctype html>` document. So the HTTP surface is a
-catch-all SPA fallback, not an API. (`GET`-only probe; no auth attempt was made.)
+cases; body is the same `<!doctype html>` document. The original probe was
+`GET`-only and unauthenticated, so it concluded there was no API. That was too
+strong: the orchestration channel is a `POST` plus a WebSocket upgrade, and both
+require a bearer token.
 
 Endpoint details come from `~/.t3/userdata/server-runtime.json`
 (`host: 0.0.0.0`, `port: 3773`, `origin: http://127.0.0.1:3773`,
-`serverVersion: 0.1.3-nightly.20261024.3630`).
+`serverVersion: 0.1.4-nightly`).
 
-> Practical consequence: to read threads outside the app, `sqlite3` (read-only) is
-> the only option. There is no documented HTTP or IPC interface to query.
+### `POST /api/auth/websocket-ticket`
+
+```http
+POST /api/auth/websocket-ticket
+Authorization: Bearer <token>
+Content-Type: application/json
+
+{}
+```
+
+Returns `{ "ticket": "…" }`. The token must carry the `orchestration:read`
+scope; a missing or expired token yields `401`/`403`. Mint one with:
+
+```sh
+t3 auth session issue --scope orchestration:read --ttl 30d --token-only
+```
+
+### `GET /ws` — orchestration RPC
+
+Connect to:
+
+```
+ws://127.0.0.1:3773/ws?orchestrationProtocol=2&wsTicket=<ticket>
+```
+
+- `orchestrationProtocol` must be `2`; the server answers `426` otherwise.
+- The ticket is single-use and short-lived; mint a fresh one per connection.
+- Frames are plain JSON **Effect RPC**, not JSON-RPC and not msgpack:
+
+```json
+{"_tag":"Request","id":1,"tag":"orchestration.subscribeShell","payload":{},"headers":[]}
+```
+
+The reply is a chunk stream:
+
+```json
+{"_tag":"Chunk","requestId":1,"values":[{"kind":"snapshot", …}]}
+```
+
+`headers: []` is required — omitting it closes the socket with code `1011`.
+The server sends `Ping` frames; reply with `{"_tag":"Pong"}`. A `Defect` frame
+means the client and server disagree about the protocol.
+
+A cold `subscribeShell` sends two `snapshot` values: the authoritative shell,
+then a project-metadata refresh with `threads: []`. Consumers must merge the
+second rather than treat it as an empty world.
+
+### Shell snapshot contents
+
+Each thread carries `id`, `projectId`, `title`, `status`,
+`providerInstanceId`, `modelSelection.model`, `lineage.relationshipToParent`,
+`pendingRuntimeRequest` (with `blocking`), `latestRunId`,
+`latestRunCompletedAt` and `updatedAt`. Subagent threads
+(`relationshipToParent == "subagent"`) are included, so there is no need to open
+a session per parent project. Stream deltas arrive as `thread.updated`,
+`thread.removed`, `project.updated` and `project.removed` items.
+
+`progress` is **not** part of the shell; the monitor shows it as unavailable.
+Archived threads leave the active shell and arrive as removals.
 
 ## MCP tool surface
 

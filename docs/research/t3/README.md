@@ -16,9 +16,10 @@ magnitudes, not constants.
 - Message and turn-item text is stored **in cleartext, untruncated, inside
   `payload_json`**. Truncation is an artifact of the MCP read tools, not of the
   database.
-- There is **no REST API**. `:3773` serves the SPA HTML for every path
-  (verified: `/`, `/api/threads`, `/threads`, `/api/v1/threads` all return the
-  same 19,492-byte `text/html` document).
+- The orchestration WebSocket at `/ws` exposes the live shell (projects, threads,
+  subagents, pending requests) read-only, given a token with
+  `orchestration:read`. Unauthenticated `GET` on `:3773` still returns the SPA
+  HTML for every path, which is why the earlier probe missed it.
 - `sqlite3` CLI on this box has **no FTS5 module**, so the message-search index
   is unreadable from the CLI. Use the `python3` `sqlite3` module.
 
@@ -30,7 +31,7 @@ magnitudes, not constants.
 | [02-schema.md](02-schema.md) | v2 tables, columns, keys, counts, ID formats, joins |
 | [03-payloads.md](03-payloads.md) | Exact `payload_json` shapes: thread, run, node, turn item (all 19 types), subagent, handoff, transfer |
 | [04-search.md](04-search.md) | FTS5 index internals and practical query recipes |
-| [05-access-paths.md](05-access-paths.md) | MCP tool surface, absence of REST, paging behaviour |
+| [05-access-paths.md](05-access-paths.md) | Orchestration WebSocket RPC, MCP tool surface, paging behaviour |
 | [06-files-and-artifacts.md](06-files-and-artifacts.md) | Attachments, provider logs, worktrees, scratch, PR cache |
 | [07-verification.md](07-verification.md) | Claim-by-claim verdicts on the source brief, incl. corrections |
 
