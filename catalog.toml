@@ -24,8 +24,8 @@ tags = ["demo"]
 [[plugin]]
 id = "rigerc/t3"
 name = "T3 Monitor"
-version = "0.1.0"
-updated_at = 1792879343
+version = "0.2.0"
+updated_at = 1793137344
 added_at = 1792879343
 author = "rigerc"
 license = "MIT"
