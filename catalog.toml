@@ -33,3 +33,22 @@ icon = "code"
 description = "Monitor local T3 Code threads and subagents without controlling agents."
 plugin_api = 24
 tags = ["development", "productivity", "bar"]
+
+[[plugin]]
+id = "rigerc/bindpeek"
+name = "Bindpeek"
+version = "0.1.0"
+updated_at = 1794338589
+added_at = 1794338589
+author = "rigerc"
+license = "GPL-3.0-or-later"
+icon = "keyboard"
+description = "Live Wayland shortcut cheat sheet, powered by the Bindpeek keyboard service."
+plugin_api = 43
+tags = ["hyprland", "sway", "mangowc", "shortcut", "productivity"]
+
+[[plugin.release]]
+plugin_api = 36
+version = "0.1.0"
+updated_at = 1794338589
+rev = "e1a30f7cfe64765053668e915fe8e33519c3ac21"
