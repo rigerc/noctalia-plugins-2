@@ -1,7 +1,7 @@
 id = "rigerc/bindpeek"
 name = "Bindpeek"
 version = "0.1.0"
-plugin_api = 36
+plugin_api = 43
 author = "rigerc"
 license = "GPL-3.0-or-later"
 dependencies = []
