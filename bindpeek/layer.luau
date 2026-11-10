@@ -23,19 +23,16 @@ local function keycap(label, key, width, height, items)
   local lit = state ~= "off"
   local heldKey = state == "held"
   local exact = state == "exact"
-  local fill = heldKey and "primary/0.32"
-      or exact and "primary/0.22"
-      or lit and "secondary/0.20"
+  local fill = heldKey and ("primary/" .. string.format("%.2f", 0.32 + glow * 0.17))
+      or exact and ("primary/" .. string.format("%.2f", 0.22 + glow * 0.14))
+      or lit and ("secondary/" .. string.format("%.2f", 0.20 + glow * 0.12))
       or "surface_container"
   local border = heldKey and "primary"
       or exact and "primary"
       or lit and "secondary"
       or "outline_variant"
   local color = heldKey and "primary" or "on_surface"
-  local scale = 1
-  if lit then
-    scale = 1.025 + (animated() and pulse * 0.055 or 0)
-  end
+  local glow = animated() and pulse or 0
   local detail = ""
   for _, item in ipairs(items) do
     if string.upper(item.key) == string.upper(key) then
@@ -57,9 +54,9 @@ local function keycap(label, key, width, height, items)
   end
   return ui.column({
     key = "cap-" .. label .. "-" .. key, width = width, height = height,
-    fill = fill, border = border, borderWidth = lit and 2 or 1,
+    fill = fill, border = border, borderWidth = lit and (glow > 0.25 and 3 or 2) or 1,
     radius = 9, gap = 2, paddingH = 2, paddingV = 6,
-    align = "center", justify = "center", scale = scale,
+    align = "center", justify = "center",
   }, body)
 end
 
@@ -83,21 +80,21 @@ local LAYOUT = {
     {";",";",49},{"'","'",49},{"Enter","↵",92}
   },
   {
-    {"Shift","SHIFT",115},{"Z","Z",56},{"X","X",56},
-    {"C","C",56},{"V","V",56},{"B","B",56},{"N","N",56},
-    {"M","M",56},{",",",",56},{".",".",56},{"/","/",56},
+    {"Shift","SHIFT",115},{"Z","Z",52},{"X","X",52},
+    {"C","C",52},{"V","V",52},{"B","B",52},{"N","N",52},
+    {"M","M",52},{",",",",52},{".",".",52},{"/","/",52},
     {"Shift","SHIFT",115}
   },
   {
     {"Ctrl","CTRL",84},{"Super","SUPER",84},{"Alt","ALT",84},
-    {"Space","␣",287},{"Alt","ALT",84},{"Super","SUPER",84},
+    {"Space","␣",270},{"Alt","ALT",84},{"Super","SUPER",84},
     {"Ctrl","CTRL",84}
   }
 }
 
 local function keyboard(items, compact)
   local rows = {}
-  local count = compact and 3 or #LAYOUT
+  local count = compact == "two" and 2 or (compact and 3 or #LAYOUT)
   local height = compact and 38 or 55
   for index = 1, count do
     local keys = {}
@@ -120,7 +117,7 @@ local function itemCard(item, width, compact)
     gap = 5, padding = 9, radius = 10,
     fill = "surface_container", border = item.exact and "primary" or "outline_variant",
     borderWidth = item.exact and 2 or 1,
-    scale = 1 + (animated() and pulse * 0.025 or 0),
+    
   }, {
     ui.row({ align = "center", gap = 8 }, {
       ui.label({
@@ -145,7 +142,7 @@ local function listView(items)
   local previous = ""
   local rendered = 0
   for _, item in ipairs(items) do
-    if rendered >= 9 then break end
+    if rendered >= 5 then break end
     if item.group ~= previous then
       previous = item.group
       table.insert(children, ui.label({
@@ -198,7 +195,7 @@ local function radial(items)
     width = 246, height = 104, radius = 52,
     fill = "primary/0.18", border = "primary", borderWidth = 2,
     align = "center", justify = "center",
-    scale = 1 + (animated() and pulse * 0.045 or 0),
+    
   }, {
     ui.glyph({ name = "keyboard", size = 28, color = "primary" }),
     ui.label({
@@ -216,7 +213,7 @@ local function radial(items)
       text = tostring(math.max(0, #items - 5)) .. " additional bindings",
       color = "on_surface_variant", fontSize = 11,
     }),
-    keyboard(items, true),
+    keyboard(items, "two"),
   })
 end
 
@@ -225,7 +222,6 @@ local function render()
   local items = parser.matches(binds, held, noctalia.getConfig("show_deeper") ~= false)
   local title = #held > 0 and table.concat(held, " + ") or "Shortcut explorer"
   local opacity = animated() and (0.48 + 0.52 * ease(enter)) or 1
-  local scale = animated() and (0.95 + 0.05 * ease(enter)) or 1
 
   local main
   if currentView == "list" then
@@ -246,9 +242,9 @@ local function render()
   end
 
   layer.render(ui.column({
-    width = 864, height = 510, radius = 18, padding = 18,
+    width = 856, height = 510, radius = 18, padding = 18,
     fill = "surface/0.97", border = "outline_variant",
-    borderWidth = 1, gap = 14, opacity = opacity, scale = scale,
+    borderWidth = 1, gap = 14, opacity = opacity,
   }, {
     ui.row({ gap = 12, align = "center" }, {
       ui.glyph({ name = "keyboard", size = 25, color = "primary" }),
