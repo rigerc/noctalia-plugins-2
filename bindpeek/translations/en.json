@@ -1,0 +1,25 @@
+{
+  "settings": {
+    "auto_show": {
+      "label": "Automatically show on modifier hold",
+      "description": "Requires the Bindpeek --keys watch service."
+    },
+    "view": { "label": "Overlay layout" },
+    "hold_delay_ms": {
+      "label": "Hold delay (ms)",
+      "description": "Wait after the first modifier is held before showing the overlay."
+    },
+    "show_deeper": { "label": "Show shortcuts requiring additional modifiers" },
+    "ignore_lone_shift": { "label": "Ignore Shift by itself" },
+    "animate_keycaps": {
+      "label": "Animate highlighted keycaps",
+      "description": "Fade and accent pulses; turn off to reduce motion."
+    }
+  },
+  "views": {
+    "list": "Shortcut list",
+    "keyboard": "Keyboard",
+    "quick_actions": "Quick actions",
+    "radial": "Radial actions"
+  }
+}
