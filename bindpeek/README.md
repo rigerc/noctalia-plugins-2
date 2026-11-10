@@ -4,6 +4,19 @@ A native Noctalia shortcut overlay, based on [Bindpeek](https://github.com/Maik-
 
 **Hold a modifier to see what it can do.** The overlay uses Noctalia's layer-shell surface and palette. It consumes only the existing Bindpeek command-line modifier reports and shortcut listings. The plugin never opens input devices, intercepts keyboard events, or executes shortcut commands.
 
+## Plugin
+
+Manifest ID: `rigerc/bindpeek`.
+
+The plugin includes the `watch` background service for Bindpeek CLI events, the `overlay` non-interactive layer, the `viewer` searchable panel, the `status` bar widget, and the `toggle` control-center shortcut.
+
+## Usage
+
+Hold SUPER, CTRL, ALT, or another supported modifier to reveal reachable shortcuts; release the modifiers to dismiss the passive overlay. Use the bar widget or control-center tile to pin an all-shortcuts preview, and open the searchable viewer when you need the complete binding list.
+
+## Settings
+
+Adjust automatic activation, presentation layout, hold delay, deeper modifier matches, lone-Shift handling, and reduced-motion keycap animation in Bindpeek plugin settings. These options are persisted by Noctalia.
 ## Requirements
 
 - Noctalia v5.4.0 or newer with plugin API 43 support.
