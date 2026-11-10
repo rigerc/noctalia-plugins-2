@@ -1,0 +1,90 @@
+id = "rigerc/bindpeek"
+name = "Bindpeek"
+version = "0.1.0"
+plugin_api = 36
+author = "rigerc"
+license = "GPL-3.0-or-later"
+dependencies = []
+tags = ["hyprland", "sway", "mangowc", "shortcut", "productivity"]
+icon = "keyboard"
+description = "Live Wayland shortcut cheat sheet, powered by the Bindpeek keyboard service."
+
+[[setting]]
+key = "auto_show"
+type = "bool"
+label_key = "settings.auto_show.label"
+description_key = "settings.auto_show.description"
+default = true
+
+[[setting]]
+key = "view"
+type = "select"
+label_key = "settings.view.label"
+default = "keyboard"
+options = [
+  { value = "list", label_key = "views.list" },
+  { value = "keyboard", label_key = "views.keyboard" },
+  { value = "quick-actions", label_key = "views.quick_actions" },
+  { value = "radial", label_key = "views.radial" },
+]
+
+[[setting]]
+key = "hold_delay_ms"
+type = "int"
+label_key = "settings.hold_delay_ms.label"
+description_key = "settings.hold_delay_ms.description"
+default = 200
+min = 0
+max = 1500
+step = 25
+
+[[setting]]
+key = "show_deeper"
+type = "bool"
+label_key = "settings.show_deeper.label"
+default = true
+
+[[setting]]
+key = "ignore_lone_shift"
+type = "bool"
+label_key = "settings.ignore_lone_shift.label"
+default = true
+
+[[setting]]
+key = "animate_keycaps"
+type = "bool"
+label_key = "settings.animate_keycaps.label"
+description_key = "settings.animate_keycaps.description"
+default = true
+
+[[service]]
+id = "watch"
+entry = "service.luau"
+
+[[layer]]
+id = "overlay"
+entry = "layer.luau"
+layer = "overlay"
+anchors = []
+width = 880
+height = 530
+exclusive_zone = 0
+keyboard = "none"
+click_through = true
+output = "focused"
+
+[[panel]]
+id = "viewer"
+entry = "panel.luau"
+width = 490
+height = 540
+placement = "floating"
+position = "center"
+
+[[widget]]
+id = "status"
+entry = "widget.luau"
+
+[[shortcut]]
+id = "toggle"
+entry = "shortcut.luau"
