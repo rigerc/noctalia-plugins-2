@@ -219,7 +219,7 @@ end
 
 local function render()
   local currentView = noctalia.getConfig("view") or "keyboard"
-  local items = parser.matches(binds, held, noctalia.getConfig("show_deeper") ~= false)
+  local items = parser.matches(binds, held, #held == 0 or noctalia.getConfig("show_deeper") ~= false)
   local title = #held > 0 and table.concat(held, " + ") or "Shortcut explorer"
   local opacity = animated() and (0.48 + 0.52 * ease(enter)) or 1
 
