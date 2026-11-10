@@ -2,13 +2,16 @@
 
 Custom Noctalia **v5+** plugin source for `rigerc/noctalia-plugins-2`.
 
-## Included plugin
+## Included plugins
 
 - `rigerc/example` — demonstration of bar widgets, a service, shortcut, launcher provider, floating panels, and a layer.
 
+- `rigerc/t3` — T3 Code monitor with a bar widget and dashboard.
+- `rigerc/bindpeek` — native shortcut cheat sheet with live modifier overlay and animated keycaps; requires Noctalia v5.4.0+ (plugin API 43) and the separate Bindpeek CLI/watch service. See [setup](bindpeek/README.md).
+
 This is adapted from the MIT-licensed `noctalia/example` reference plugin published by the [Noctalia team](https://github.com/noctalia-dev/official-plugins). The original source and authorship are acknowledged; changing the plugin ID avoids overriding the official copy.
 
-**Requires** a Noctalia v5 build supporting plugin API 36 or later. The plugin is a developer demonstration, not a full third-party plugin collection.
+**Requires** a Noctalia v5 build supporting plugin API 36 or later. The example is a developer demonstration; Bindpeek and T3 are separate functional plugins.
 
 ## Install from GitHub
 
