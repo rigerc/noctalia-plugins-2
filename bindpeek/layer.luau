@@ -23,6 +23,7 @@ local function keycap(label, key, width, height, items)
   local lit = state ~= "off"
   local heldKey = state == "held"
   local exact = state == "exact"
+  local glow = animated() and pulse or 0
   local fill = heldKey and ("primary/" .. string.format("%.2f", 0.32 + glow * 0.17))
       or exact and ("primary/" .. string.format("%.2f", 0.22 + glow * 0.14))
       or lit and ("secondary/" .. string.format("%.2f", 0.20 + glow * 0.12))
@@ -32,7 +33,6 @@ local function keycap(label, key, width, height, items)
       or lit and "secondary"
       or "outline_variant"
   local color = heldKey and "primary" or "on_surface"
-  local glow = animated() and pulse or 0
   local detail = ""
   for _, item in ipairs(items) do
     if string.upper(item.key) == string.upper(key) then
@@ -53,7 +53,7 @@ local function keycap(label, key, width, height, items)
     }))
   end
   return ui.column({
-    key = "cap-" .. label .. "-" .. key, width = width, height = height,
+    width = width, height = height,
     fill = fill, border = border, borderWidth = lit and (glow > 0.25 and 3 or 2) or 1,
     radius = 9, gap = 2, paddingH = 2, paddingV = 6,
     align = "center", justify = "center",
